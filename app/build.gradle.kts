@@ -55,8 +55,7 @@ dependencies {
     implementation ("com.google.dagger:hilt-android:2.51.1")
 
     // For instrumentation tests
-
-
+    kapt ("com.google.dagger:hilt-compiler:2.51.1")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
