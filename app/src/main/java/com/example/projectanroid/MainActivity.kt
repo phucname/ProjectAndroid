@@ -10,6 +10,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.projectanroid.common.Screens
+import com.example.projectanroid.presentation.login.LoginScreen
+import com.example.projectanroid.presentation.onboarding.OnboardingScreen
+import com.example.projectanroid.presentation.splash.SlplashScreen
 import com.example.projectanroid.ui.theme.ProjectAnroidTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +29,18 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    val navController = rememberNavController()
+                    NavHost(navController = navController,startDestination = Screens.Splash){
+                        composable(route = Screens.Splash){
+                            SlplashScreen(navController)
+                        }
+                        composable(route = Screens.OnBoarding){
+                            OnboardingScreen(navController)
+                        }
+                        composable(route = Screens.Login){
+                            LoginScreen()
+                        }
+                    }
                 }
             }
         }
