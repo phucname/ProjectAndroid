@@ -10,15 +10,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.projectanroid.common.Screens
 import com.example.projectanroid.presentation.login.LoginScreen
+import com.example.projectanroid.presentation.login.ModeluLogin
 import com.example.projectanroid.presentation.onboarding.OnboardingScreen
+import com.example.projectanroid.presentation.set_location.SetLocationScreen
 import com.example.projectanroid.presentation.splash.SlplashScreen
 import com.example.projectanroid.ui.theme.ProjectAnroidTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +43,20 @@ class MainActivity : ComponentActivity() {
                             OnboardingScreen(navController)
                         }
                         composable(route = Screens.Login){
-                            LoginScreen()
+
+                            LoginScreen(navHostController = navController)
+                        }
+                        composable(route = Screens.SetLocation){
+
+                            SetLocationScreen()
                         }
                     }
                 }
             }
         }
     }
+
+
 }
 
 @Composable

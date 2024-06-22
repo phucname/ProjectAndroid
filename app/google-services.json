@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "1059074405711",
+    "firebase_url": "https://doan-f52ef-default-rtdb.firebaseio.com",
+    "project_id": "doan-f52ef",
+    "storage_bucket": "doan-f52ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059074405711:android:edb1b193ba2b8fede7c13a",
+        "android_client_info": {
+          "package_name": "com.example.doan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1059074405711-7sirqbf2moc2nbrvd8ot7hrs4teg8lu8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxr8YquEOXwLBw-cZyrQ7Q_Hrcrazx1FA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1059074405711-7sirqbf2moc2nbrvd8ot7hrs4teg8lu8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059074405711:android:0512b236b9eb8a66e7c13a",
+        "android_client_info": {
+          "package_name": "com.example.hilt_mvvm_jetpackcompose"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1059074405711-7sirqbf2moc2nbrvd8ot7hrs4teg8lu8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxr8YquEOXwLBw-cZyrQ7Q_Hrcrazx1FA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1059074405711-7sirqbf2moc2nbrvd8ot7hrs4teg8lu8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1059074405711:android:388e6cf398479321e7c13a",
+        "android_client_info": {
+          "package_name": "com.example.projectanroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1059074405711-7sirqbf2moc2nbrvd8ot7hrs4teg8lu8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxr8YquEOXwLBw-cZyrQ7Q_Hrcrazx1FA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1059074405711-7sirqbf2moc2nbrvd8ot7hrs4teg8lu8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

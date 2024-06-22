@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id ("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -53,6 +54,7 @@ android {
 
 dependencies {
     implementation ("com.google.dagger:hilt-android:2.51.1")
+    implementation(libs.firebase.auth)
 
     // For instrumentation tests
     kapt ("com.google.dagger:hilt-compiler:2.51.1")
