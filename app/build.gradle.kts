@@ -55,6 +55,7 @@ android {
 dependencies {
     implementation ("com.google.dagger:hilt-android:2.51.1")
     implementation(libs.firebase.auth)
+    implementation(libs.play.services.location)
 
     // For instrumentation tests
     kapt ("com.google.dagger:hilt-compiler:2.51.1")
