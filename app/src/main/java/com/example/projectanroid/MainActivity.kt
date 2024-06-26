@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.projectanroid.common.Screens
+import com.example.projectanroid.presentation.bottom_navigation.NavigationMain
 import com.example.projectanroid.presentation.login.LoginScreen
 import com.example.projectanroid.presentation.onboarding.OnboardingScreen
 import com.example.projectanroid.presentation.set_location.SetLocationScreen
@@ -33,7 +34,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    NavHost(navController = navController,startDestination = Screens.SetLocation){
+                    NavHost(navController = navController,startDestination = "Main"){
                         composable(route = Screens.Splash){
                             SlplashScreen(navController)
                         }
@@ -47,6 +48,9 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screens.SetLocation){
 
                             SetLocationScreen()
+                        }
+                        composable(route = "Main"){
+                            NavigationMain()
                         }
                     }
                 }
