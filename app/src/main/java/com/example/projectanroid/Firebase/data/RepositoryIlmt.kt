@@ -1,6 +1,7 @@
 package com.example.projectanroid.Firebase.data
 
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.projectanroid.module.Food
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.GlobalScope
@@ -15,5 +16,6 @@ class RepositoryIlmt @Inject constructor(val firebaseAuth: FirebaseAuth): Reposi
                return  firebaseAuth.signInWithEmailAndPassword(email, passWord).await()
 
         }
+
 
 }

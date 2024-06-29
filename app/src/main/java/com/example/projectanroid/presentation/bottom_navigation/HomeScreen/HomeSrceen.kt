@@ -27,6 +27,9 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,13 +46,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.projectanroid.Firebase.data.FoodReposllmt
 import com.example.projectanroid.R
+import javax.inject.Inject
 
 import kotlin.math.absoluteValue
 
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeSrceen() {
+fun HomeSrceen ( viewmoduleFoodList: viewmoduleFoodList = hiltViewModel()) {
+    val foodList by viewmoduleFoodList._dataListFood.collectAsState(initial = emptyList())
+
+    LaunchedEffect(Unit) {
+        viewmoduleFoodList.listFood()
+    }
+    println("datalistFood:$foodList")
+
+
     val listImg = listOf(R.drawable.banner1, R.drawable.banner2, R.drawable.banner3)
     val state = rememberPagerState(pageCount = { listImg.size })
     Column(
