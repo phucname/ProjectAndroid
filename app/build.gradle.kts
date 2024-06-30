@@ -53,12 +53,14 @@ android {
 }
 
 dependencies {
-    implementation ("com.google.dagger:hilt-android:2.51.1")
+    implementation (libs.hilt.android)
     implementation(libs.firebase.auth)
     implementation(libs.play.services.location)
     implementation(libs.firebase.database)
 
     // For instrumentation tests
+    implementation("io.coil-kt:coil-compose:2.1.0")
+    implementation(libs.firebase.storage)
     kapt ("com.google.dagger:hilt-compiler:2.51.1")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")

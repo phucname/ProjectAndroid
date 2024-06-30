@@ -19,6 +19,7 @@ import com.example.projectanroid.presentation.login.LoginScreen
 import com.example.projectanroid.presentation.onboarding.OnboardingScreen
 import com.example.projectanroid.presentation.set_location.SetLocationScreen
 import com.example.projectanroid.presentation.splash.SlplashScreen
+import com.example.projectanroid.presentationMain.Food.AddFood
 import com.example.projectanroid.ui.theme.ProjectAnroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    NavHost(navController = navController,startDestination = "Main"){
+                    NavHost(navController = navController,startDestination = "AddFood"){
                         composable(route = Screens.Splash){
                             SlplashScreen(navController)
                         }
@@ -51,6 +52,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "Main"){
                             NavigationMain()
+                        }
+                        composable(route = "AddFood"){
+                            AddFood()
                         }
                     }
                 }
