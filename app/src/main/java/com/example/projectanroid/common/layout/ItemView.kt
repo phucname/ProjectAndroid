@@ -104,12 +104,12 @@ fun Preview() {
 
     ItemView.ItemFoodOder(
         itemFood = Food(
-            0,
+            "",
             "KFC ",
             55,
             "ngonnnn",
             "",
-            1
+            listOf("","")
         )
     )
 

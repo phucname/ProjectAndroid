@@ -5,13 +5,10 @@ import com.example.projectanroid.module.Food
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.getValue
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class FoodReposllmt @Inject constructor (val databaseReferencee: DatabaseReference): FoodRepos {
@@ -35,16 +32,16 @@ class FoodReposllmt @Inject constructor (val databaseReferencee: DatabaseReferen
                 ).isFailure
             }
         }
-
         databaseReference.addValueEventListener(listener)
-
-        // Đảm bảo rằng listener được gỡ bỏ khi không còn cần thiết
         awaitClose {
             databaseReference.removeEventListener(listener)
         }
-
-
     }
+
+    override suspend fun setFood(food: Food): Boolean {
+      return databaseReferencee.child(food.id_food).setValue(food).isSuccessful
+    }
+
 }
 
 

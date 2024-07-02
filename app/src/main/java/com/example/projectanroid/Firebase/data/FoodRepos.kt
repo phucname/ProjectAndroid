@@ -8,4 +8,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface FoodRepos {
      suspend fun getListFood(): Flow<Resource<List<Food>>>
+     suspend fun  setFood(food: Food):Boolean
 }
