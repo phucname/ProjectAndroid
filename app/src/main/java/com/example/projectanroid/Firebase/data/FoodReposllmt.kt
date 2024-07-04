@@ -2,6 +2,7 @@ package com.example.projectanroid.Firebase.data
 
 import com.example.projectanroid.Firebase.Resource
 import com.example.projectanroid.module.Food
+import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -9,6 +10,8 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
+import okhttp3.internal.wait
 import javax.inject.Inject
 
 class FoodReposllmt @Inject constructor (val databaseReferencee: DatabaseReference): FoodRepos {
@@ -37,10 +40,25 @@ class FoodReposllmt @Inject constructor (val databaseReferencee: DatabaseReferen
             databaseReference.removeEventListener(listener)
         }
     }
+//
+//    override suspend fun setFood(food: Food): Flow<Resource<Boolean>> = callbackFlow {
+//     trySend(Resource.Loading())
+//      val request = databaseReferencee.child(food.id_food).setValue(food)
+//        request.addOnSuccessListener{
+//            trySend(Resource.Success(true))
+//        }.addOnFailureListener{
+//            trySend(Resource.Error(it.toString()))
+//        }
+//        awaitClose{
+//            request.isCanceled
+//
+//        }
+//
+//    }
+override suspend fun setFood(food: Food): Task<Void>{
+    return databaseReferencee.child(food.id_food).setValue(food)
 
-    override suspend fun setFood(food: Food): Boolean {
-      return databaseReferencee.child(food.id_food).setValue(food).isSuccessful
-    }
+}
 
 }
 

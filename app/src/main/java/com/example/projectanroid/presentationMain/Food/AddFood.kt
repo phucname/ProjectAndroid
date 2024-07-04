@@ -1,6 +1,5 @@
 package com.example.projectanroid.presentationMain.Food
 
-import android.content.Context
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -57,61 +56,56 @@ import com.example.projectanroid.common.CustomTextFiled
 import com.example.projectanroid.common.TextFieldStyleManager
 import com.example.projectanroid.common.TextFieldStyles
 import com.example.projectanroid.module.Food
-import com.google.firebase.Firebase
+import com.example.projectanroid.module.getImageFirebase
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
 
 
-fun getBytesFromUri(context: Context, uri: Uri): ByteArray? {
-    return try {
-        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
-        val byteBuffer = ByteArrayOutputStream()
-        val buffer = ByteArray(1024)
-        var len: Int
-        while (inputStream?.read(buffer).also { len = it ?: -1 } != -1) {
-            byteBuffer.write(buffer, 0, len)
-        }
-        byteBuffer.toByteArray()
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
-    }
-}
-
+@OptIn(DelicateCoroutinesApi::class)
 @Composable
-fun AddFood(addFood: ModuleAddFood = hiltViewModel()) {
-    val stateAddFood = addFood._stateAddFood
-    val listIngre = remember { mutableStateListOf<String>() }
+fun AddFood(addFood: ModuleAddFood = hiltViewModel()
+            , moduleImageFirebase: getImageFirebase = hiltViewModel()) {
+
+    val stateAddFood = addFood.stateAddFood.value
+    val stateImage = moduleImageFirebase._stateSetImage.value
+    val listIngres = remember { mutableStateListOf<String>() }
     var selectedImg by remember { mutableStateOf<Uri?>(null) }
-    var templeImg by remember { mutableStateOf<Uri?>(null) }
+    var templeImg by remember { mutableStateOf<Uri?>(Uri.EMPTY) }
     var valueTest by remember { mutableStateOf("") }
     var valueName by remember { mutableStateOf("") }
-    var valuePrice by remember { mutableStateOf("") }
+    var valuePrice by remember { mutableStateOf("0") }
     var valueShortDescription by remember { mutableStateOf("") }
-
+    val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
-  if (stateAddFood.value.data == true){
-      println("Add Food True")
-  }
-//    val firebaseStorage = FirebaseStorage.getInstance()
-//    val mountainImagesRef = firebaseStorage.reference.child("Food/mountains.jpg")
-//    if (selectedImg != null) {
-//        templeImg = selectedImg
-//        var getbye = getBytesFromUri(LocalContext.current, templeImg!!)
-//        if (getbye != null) {
-//            val uploadTask = mountainImagesRef.putBytes(getbye)
-//            uploadTask.addOnFailureListener {
-//                // Handle unsuccessful uploads
-//            }.addOnSuccessListener { taskSnapshot ->
-//                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-//                // ...
-//            }
-//        }
-//    }
+    var addFoodTriggered by remember { mutableStateOf(false) }
+    var food by remember {
+        mutableStateOf(
+            Food(
+                "",
+                valueName,
+                valuePrice.toInt(),
+                valueShortDescription,
+                "",
+                listIngres
+            )
+        )
+    }
+
+    if(selectedImg !=null){
+        templeImg = selectedImg
+    }
+
+    if (stateImage.data == true && addFoodTriggered) {
+        addFoodTriggered = false
+        food =food.copy(description = valueShortDescription, name_food = valueName, price = valuePrice.toInt())
+        addFood.addFood(food)
+    }
+
+    if (stateAddFood.data == true && !addFoodTriggered) {
+        println("add Food success")
+    }
     val handle =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia(),
             onResult = { selectedImg = it })
@@ -132,7 +126,7 @@ fun AddFood(addFood: ModuleAddFood = hiltViewModel()) {
         )
         CustomTextFiled.TextFiledBasic(
             modifier = Modifier,
-            placeable = "Item Pcire",
+            placeable = "Item Price",
             onChang = { valuePrice = it },
             value = valuePrice
         )
@@ -211,10 +205,9 @@ fun AddFood(addFood: ModuleAddFood = hiltViewModel()) {
             },
             keyboardActions = KeyboardActions(
                 onNext = {
-                    listIngre.add(valueTest)
+                    listIngres.add(valueTest)
                     valueTest = ""
                     keyboardController!!.hide()
-                    println("list:$listIngre")
                 }
             ),
             modifier = Modifier
@@ -222,14 +215,21 @@ fun AddFood(addFood: ModuleAddFood = hiltViewModel()) {
                 .border(1.dp, Color.DarkGray, RoundedCornerShape(10)),
             colors = TextFieldStyleManager().textFieldColors(),
             placeholder = { Text(text = "Ingredients") }
-
         )
-        LazyColumnIngredients(listIngredients = listIngre)
+        LazyColumnIngredients(listIngredients = listIngres)
         Button(
-            onClick = { var food : Food =  Food("",valueName,valuePrice.toInt(),valueShortDescription, "", listIngre)
-                   addFood.addFood(food)
 
+            onClick = {
+                GlobalScope.launch {
+                    val databaseReference = FirebaseDatabase.getInstance().reference.push()
+                    println("key:${databaseReference.key}")
+                    food =  food.copy(id_food = databaseReference.key!!, img_food = databaseReference.key!!)
 
+                    if (!addFoodTriggered) {
+                        addFoodTriggered = true
+                        moduleImageFirebase.setImageFirebase(templeImg!!,databaseReference.key!!,context)
+                    }
+                }
             },
             modifier = Modifier
                 .size(157.dp, 57.dp),
@@ -238,7 +238,6 @@ fun AddFood(addFood: ModuleAddFood = hiltViewModel()) {
         ) {
             Text(text = "Add Item", fontSize = 20.sp)
         }
-
     }
 }
 
@@ -256,7 +255,7 @@ fun LazyColumnIngredients(listIngredients: List<String>) {
                     painter = painterResource(id = R.drawable.baseline_download_for_offline_24),
                     contentDescription = null
                 )
-                Text(text = "$item", fontSize = 15.sp)
+                Text(text = item, fontSize = 15.sp)
             }
 
         })
@@ -285,4 +284,8 @@ fun Top() {
                 .weight(0.8f)
         )
     }
+}
+
+fun checkAddFood(){
+
 }
