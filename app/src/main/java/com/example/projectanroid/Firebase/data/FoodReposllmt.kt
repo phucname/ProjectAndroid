@@ -40,21 +40,6 @@ class FoodReposllmt @Inject constructor (val databaseReferencee: DatabaseReferen
             databaseReference.removeEventListener(listener)
         }
     }
-//
-//    override suspend fun setFood(food: Food): Flow<Resource<Boolean>> = callbackFlow {
-//     trySend(Resource.Loading())
-//      val request = databaseReferencee.child(food.id_food).setValue(food)
-//        request.addOnSuccessListener{
-//            trySend(Resource.Success(true))
-//        }.addOnFailureListener{
-//            trySend(Resource.Error(it.toString()))
-//        }
-//        awaitClose{
-//            request.isCanceled
-//
-//        }
-//
-//    }
 override suspend fun setFood(food: Food): Task<Void>{
     return databaseReferencee.child(food.id_food).setValue(food)
 

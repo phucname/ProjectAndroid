@@ -5,14 +5,11 @@ import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.projectanroid.Firebase.Resource
 import com.example.projectanroid.Firebase.conmon.DataState
 import com.example.projectanroid.Firebase.data.StorgeFirebase
-import com.example.projectanroid.presentation.login.CoinListState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
@@ -26,6 +23,7 @@ class getImageFirebase @Inject constructor(val storgeFirebase: StorgeFirebase) :
     val StateSetImage = mutableStateOf(DataState<Boolean>())
     val _stateSetImage = StateSetImage
     fun getUrlImgFirebase(nameImg: String){
+
         GlobalScope.launch {
             storgeFirebase.getImageUrl(nameImg).onEach { result ->
                 when (result) {

@@ -3,7 +3,6 @@ package com.example.projectanroid.Firebase.data
 import com.example.projectanroid.Firebase.Resource
 import com.example.projectanroid.module.Food
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.flow.Flow
 
 

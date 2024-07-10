@@ -25,7 +25,7 @@ import java.io.InputStream
 import javax.inject.Inject
 
 @HiltViewModel
-class ModuleAddFood @Inject constructor(val userCaseSetFood: UserCaseSetFood
+class ModuleAddFood @Inject constructor(val userCaseSetFood: UserCaseSetFood,val getImageFirebase: getImageFirebase
 ):ViewModel() {
     private val _stateAddFood = mutableStateOf(DataState<Boolean>())
     val stateAddFood: State<DataState<Boolean>> get() = _stateAddFood
