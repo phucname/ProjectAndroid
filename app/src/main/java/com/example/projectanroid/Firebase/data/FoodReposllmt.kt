@@ -16,14 +16,14 @@ import javax.inject.Inject
 
 class FoodReposllmt @Inject constructor (val databaseReferencee: DatabaseReference): FoodRepos {
     override suspend fun getListFood(): Flow<Resource<List<Food>>> = callbackFlow {
-        val databaseReference = databaseReferencee.child("Food")
+        val databaseReference = databaseReferencee
 
         // Phát tín hiệu Loading
         trySend(Resource.Loading())
 
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val foods = dataSnapshot.children.mapNotNull { it.getValue(Food::class.java) }
+                val foods:List<Food> = dataSnapshot.children.mapNotNull { it.getValue(Food::class.java) }
                 trySend(Resource.Success(foods))
             }
 

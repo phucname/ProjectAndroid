@@ -6,5 +6,6 @@ data class Food (
     val price: Int = 0,
     val description: String = "",
     val img_food: String = "",
-    val Ingredients: List<String>
+    val ingredients: List<String> = emptyList()
+
 )

@@ -61,6 +61,7 @@ dependencies {
     // For instrumentation tests
     implementation("io.coil-kt:coil-compose:2.1.0")
     implementation(libs.firebase.storage)
+    implementation(libs.firebase.database.ktx)
     kapt ("com.google.dagger:hilt-compiler:2.51.1")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")

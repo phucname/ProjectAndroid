@@ -26,7 +26,7 @@ class viewmoduleFoodList @Inject constructor(val foodRepos: FoodRepos) :ViewMode
                         request.data?.let { datalistFood.send(it) }
                     }
 
-                    is Resource.Error -> TODO()
+                    is Resource.Error -> print("Err get list food")
                 }
             }
         }

@@ -56,7 +56,7 @@ import com.example.projectanroid.common.CustomTextFiled
 import com.example.projectanroid.common.TextFieldStyleManager
 import com.example.projectanroid.common.TextFieldStyles
 import com.example.projectanroid.module.Food
-import com.example.projectanroid.module.getImageFirebase
+import com.example.projectanroid.module.GetImageFirebaseViewModel
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -66,10 +66,10 @@ import kotlinx.coroutines.launch
 @OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun AddFood(addFood: ModuleAddFood = hiltViewModel()
-            , moduleImageFirebase: getImageFirebase = hiltViewModel()) {
+            , moduleImageFirebase: GetImageFirebaseViewModel = hiltViewModel()) {
 
     val stateAddFood = addFood.stateAddFood.value
-    val stateImage = moduleImageFirebase._stateSetImage.value
+    val stateImage = moduleImageFirebase.stateSetImage.value
     val listIngres = remember { mutableStateListOf<String>() }
     var selectedImg by remember { mutableStateOf<Uri?>(null) }
     var templeImg by remember { mutableStateOf<Uri?>(Uri.EMPTY) }

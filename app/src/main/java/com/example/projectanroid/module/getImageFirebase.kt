@@ -9,64 +9,62 @@ import com.example.projectanroid.Firebase.Resource
 import com.example.projectanroid.Firebase.conmon.DataState
 import com.example.projectanroid.Firebase.data.StorgeFirebase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import javax.inject.Inject
 
 @HiltViewModel
-class getImageFirebase @Inject constructor(val storgeFirebase: StorgeFirebase) :ViewModel(){
-    val UriImg = mutableStateOf(DataState<Uri>())
-    val _UriImg = UriImg
-    val StateSetImage = mutableStateOf(DataState<Boolean>())
-    val _stateSetImage = StateSetImage
-    fun getUrlImgFirebase(nameImg: String){
+class GetImageFirebaseViewModel @Inject constructor(
+    private val storageFirebase: StorgeFirebase
+) : ViewModel() {
 
-        GlobalScope.launch {
-            storgeFirebase.getImageUrl(nameImg).onEach { result ->
+    val uriImg = mutableStateOf(DataState<Uri>())
+    val stateSetImage = mutableStateOf(DataState<Boolean>())
+
+    fun getUrlImgFirebase(nameImg: String) {
+        viewModelScope.launch {
+            storageFirebase.getImageUrl(nameImg).collectLatest { result ->
                 when (result) {
                     is Resource.Success -> {
-                        UriImg.value = DataState(data = result.data)
+                        uriImg.value = DataState(data = result.data)
                     }
-
                     is Resource.Error -> {
-                        UriImg.value = DataState(
-                            error = result.message ?: "An unexpected error occured"
-                        )
+                        uriImg.value = DataState(error = result.message ?: "An unexpected error occurred")
                     }
-
                     is Resource.Loading -> {
-                        UriImg.value = DataState(isLoading = true)
+                        uriImg.value = DataState(isLoading = true)
                     }
                 }
             }
-
         }
-
     }
 
-    fun setImageFirebase (uriImag: Uri, nameImg: String, context: Context){
-        viewModelScope.launch{
-            val byteArray = getBytesFromUri(context = context, uriImag)
-            if (byteArray != null){
-                storgeFirebase.setImage(byteArray, nameImg).collect { resource ->
-                    when(resource){
+    fun setImageFirebase(uriImag: Uri, nameImg: String, context: Context) {
+        viewModelScope.launch {
+            val byteArray = getBytesFromUri(context, uriImag)
+            if (byteArray != null) {
+                storageFirebase.setImage(byteArray, nameImg).collectLatest { resource ->
+                    when (resource) {
                         is Resource.Success -> {
-                            StateSetImage.value = DataState(data = true)}
-                        is Resource.Error -> {
-                            StateSetImage.value = DataState(error = resource.message ?: "Not Set Image")
+                            stateSetImage.value = DataState(data = true)
                         }
-                        is Resource.Loading -> StateSetImage.value = DataState(isLoading = true)
+                        is Resource.Error -> {
+                            stateSetImage.value = DataState(error = resource.message ?: "Not Set Image")
+                        }
+                        is Resource.Loading -> {
+                            stateSetImage.value = DataState(isLoading = true)
+                        }
                     }
                 }
-            }else StateSetImage.value = DataState(error = "not get byte d")
-
+            } else {
+                stateSetImage.value = DataState(error = "Cannot get byte data")
+            }
         }
     }
 
-    fun getBytesFromUri(context: Context, uri: Uri): ByteArray? {
+    private fun getBytesFromUri(context: Context, uri: Uri): ByteArray? {
         return try {
             val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
             val byteBuffer = ByteArrayOutputStream()

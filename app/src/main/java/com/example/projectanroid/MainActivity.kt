@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    NavHost(navController = navController,startDestination = "AddFood"){
+                    NavHost(navController = navController,startDestination = "Main"){
                         composable(route = Screens.Splash){
                             SlplashScreen(navController)
                         }

@@ -40,6 +40,7 @@ import com.example.projectanroid.presentation.bottom_navigation.cart.CartSrceen
 import com.example.projectanroid.presentation.bottom_navigation.history.HistorySrceen
 import com.example.projectanroid.presentation.bottom_navigation.profile.ProfileSrceen
 import com.example.projectanroid.presentation.bottom_navigation.search.SearchSrceen
+import com.example.projectanroid.presentationMain.Food.AddFood
 import com.example.projectanroid.ui.theme.ProjectAnroidTheme
 
 
@@ -55,7 +56,11 @@ fun NavigationMain() {
             bottomBar = {
                 BottomNavigation(  backgroundColor = Color.White, modifier = Modifier
                     .height(76.dp)
-                    .border(0.2.dp, Color.Black, RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
+                    .border(
+                        0.2.dp,
+                        Color.Black,
+                        RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
+                    )
                     .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
                 ) {
                     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -79,7 +84,7 @@ fun NavigationMain() {
                     HomeSrceen()
                 }
                 composable(Screen.Profile.route){
-                    ProfileSrceen()
+                    AddFood()
                 }
                 composable(Screen.Cart.route){
                     CartSrceen("Crat")
