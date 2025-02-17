@@ -1,11 +1,12 @@
 package com.example.projectanroid.presentation.bottom_navigation
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.magnifier
@@ -26,6 +27,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,6 +39,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.projectanroid.R
 import com.example.projectanroid.presentation.bottom_navigation.HomeScreen.HomeSrceen
 import com.example.projectanroid.presentation.bottom_navigation.cart.CartSrceen
 import com.example.projectanroid.presentation.bottom_navigation.history.HistorySrceen
@@ -48,11 +53,31 @@ import com.example.projectanroid.ui.theme.ProjectAnroidTheme
 fun NavigationMain() {
     val listScreen = listOf(Screen.Home, Screen.Cart, Screen.search, Screen.history, Screen.Profile)
     val navController = rememberNavController()
-
-
-    CompositionLocalProvider(value = LocalRippleTheme provides DisabledRippleTheme) {
+    CompositionLocalProvider(value = LocalRippleTheme provides DisabledRippleTheme)//Dây là một CompositionLocal có nhiệm vụ quản lý hiệu ứng Ripple trong Compose.
+    {
         Scaffold (
-            modifier = Modifier.background(Color.DarkGray),
+            topBar = {
+                Row(
+                    modifier = Modifier
+                        .padding(start = 20.dp, end = 20.dp)
+                        .height(70.dp)
+                        .fillMaxWidth()
+                        , horizontalArrangement = Arrangement.SpaceBetween
+                        , verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Explore Your Favorite Food",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.W400,
+                        fontFamily = FontFamily(Font(R.font.font_yeon))
+                    )
+                    Image(
+                        painter = painterResource(id = R.drawable.baseline_notifications_none_24),
+                        contentDescription = null
+                    )
+                }
+
+            },
             bottomBar = {
                 BottomNavigation(  backgroundColor = Color.White, modifier = Modifier
                     .height(76.dp)
@@ -93,7 +118,7 @@ fun NavigationMain() {
                     HistorySrceen("hiss")
                 }
                 composable(Screen.search.route){
-                    SearchSrceen("Search")
+                    SearchSrceen()
                 }
             }
         }

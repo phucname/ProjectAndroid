@@ -1,0 +1,17 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="28.56dp"
+    android:height="28.56dp"
+    android:viewportWidth="28.56"
+    android:viewportHeight="28.56">
+
+  <!-- Nhóm chứa path và căn giữa bằng dịch chuyển -->
+  <group android:translateX="8" android:translateY="8">
+    <path
+        android:pathData="M15,15L10.65,10.65M5,0C7.761,0 10,2.239 10,5M13,5C13,9.418 9.418,13 5,13C0.582,13 -3,9.418 -3,5C-3,0.582 0.582,-3 5,-3C9.418,-3 13,0.582 13,5Z"
+        android:strokeLineJoin="round"
+        android:strokeWidth="2"
+        android:fillColor="#00000000"
+        android:strokeColor="#000000"
+        android:strokeLineCap="round"/>
+  </group>
+</vector>

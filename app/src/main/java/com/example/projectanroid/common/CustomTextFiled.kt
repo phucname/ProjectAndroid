@@ -21,8 +21,21 @@ object CustomTextFiled {
         TextField(value = value, onValueChange =onChang
             , colors = TextFieldStyleManager(unfocusedContainerColor = Color(0xFFFFFF.toInt())).textFieldColors()
             , modifier = Modifier
-                .padding(top = 10.dp, bottom = 10.dp)
+
                 .border(1.dp, Color(0xFF131327.toInt()), RoundedCornerShape(15))
+                .fillMaxWidth()
+            , placeholder = { Text(text = placeable) }
+        )
+
+    }
+    @Composable
+    fun TextFiledBasicNotBorder(modifier: Modifier,placeable: String, onChang: (String)-> Unit
+                       , value: String){
+        TextField(value = value, onValueChange =onChang
+            , colors = TextFieldStyleManager(unfocusedContainerColor = Color(0xFFFFFF.toInt())
+            , focusedContainerColor = Color.Transparent
+            ).textFieldColors()
+            , modifier = Modifier
                 .fillMaxWidth()
             , placeholder = { Text(text = placeable) }
         )
@@ -34,7 +47,7 @@ object CustomTextFiled {
 @Composable
 fun Preview(){
     Surface {
-        CustomTextFiled.TextFiledBasic(modifier = Modifier, placeable = "", onChang = { it}, value ="" )
+        CustomTextFiled.TextFiledBasicNotBorder(modifier = Modifier, placeable = "mkkkkk", onChang = { it}, value ="" )
 
     }
 }
