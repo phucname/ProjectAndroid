@@ -99,7 +99,9 @@ fun AddFood(addFood: ModuleAddFood = hiltViewModel()
 
     if (stateImage.data == true && addFoodTriggered) {
         addFoodTriggered = false
-        food =food.copy(description = valueShortDescription, name_food = valueName, price = valuePrice.toInt())
+        food.description = valueShortDescription
+        food.name_food = valueName
+        food.price = valuePrice.toInt()
         addFood.addFood(food)
     }
 
@@ -223,8 +225,8 @@ fun AddFood(addFood: ModuleAddFood = hiltViewModel()
                 GlobalScope.launch {
                     val databaseReference = FirebaseDatabase.getInstance().reference.push()
                     println("key:${databaseReference.key}")
-                    food =  food.copy(id_food = databaseReference.key!!, img_food = databaseReference.key!!)
-
+                    food.id_food = databaseReference.key!!
+                    food.img_food = food.id_food
                     if (!addFoodTriggered) {
                         addFoodTriggered = true
                         moduleImageFirebase.setImageFirebase(templeImg!!,databaseReference.key!!,context)

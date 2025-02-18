@@ -1,11 +1,16 @@
 package com.example.projectanroid.module
 
-data class Food (
-    var id_food: String = "",
-    val name_food: String ="",
-    val price: Int = 0,
-    val description: String = "",
-    val img_food: String = "",
-    val ingredients: List<String> = emptyList()
+ open  class Food (
+     var id_food: String = "",
+     var name_food: String ="",
+     var price: Int = 0,
+     var description: String = "",
+     var img_food: String = "",
+     val ingredients: List<String> = emptyList()
 
 )
+
+data class CartFood(var quantity:Int):Food(){
+
+}
+
