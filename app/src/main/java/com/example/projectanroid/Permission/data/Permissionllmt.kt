@@ -8,7 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.core.content.ContextCompat
-import com.example.projectanroid.common.StatusPermession
+import com.example.projectanroid.contanst.StatusPermession
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class Permissionllmt( val contextPermission: Context): PermissionReposi {
