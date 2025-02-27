@@ -93,7 +93,7 @@ fun SetLocationScreen() {
 
 @Preview
 @Composable
-fun Preview(){
+fun Getting(){
     Surface(onClick = { /*TODO*/ }) {
         SetLocationScreen()
 

@@ -127,7 +127,9 @@ fun lazalyListFood(listFood: List<Food>){
         items(items = listFood, itemContent = {
            item ->
             ItemView.ItemFoodOder(itemFood = item)
-            Spacer(modifier = Modifier.fillMaxWidth().height(10.dp))
+            Spacer(modifier = Modifier
+                .fillMaxWidth()
+                .height(10.dp))
         })
     }
 
@@ -136,12 +138,12 @@ fun lazalyListFood(listFood: List<Food>){
 @Composable
 fun HorizontalParer(state: PagerState, listImg: List<Int>){
     HorizontalPager(verticalAlignment = Alignment.CenterVertically,
-        contentPadding = PaddingValues(start = 35.dp, end =35.dp)
+        contentPadding = PaddingValues(start = 15.dp, end =15.dp)
         , modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
         , state = state) { page ->
-        Card(
+        Card(modifier = Modifier.padding(start = 10.dp)
         ) {
             Box(modifier = Modifier.fillMaxSize()){
                 Image( modifier = Modifier
@@ -151,6 +153,7 @@ fun HorizontalParer(state: PagerState, listImg: List<Int>){
                     painter = painterResource(id = listImg[page])
                     , contentDescription = null )
             }
+
 
         }
     }

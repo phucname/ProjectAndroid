@@ -1,6 +1,7 @@
 package com.example.projectanroid.ui.detail
 
 import android.net.Uri
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -26,6 +27,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -120,7 +122,7 @@ fun AddFood(addFood: ModuleAddFood = hiltViewModel()
             .verticalScroll(enabled = true, reverseScrolling = true, state = ScrollState(2))
             .padding(start = 10.dp, top = 10.dp, end = 10.dp)
     ) {
-        Top()
+        TopBarAddFood()
         CustomTextFiled.TextFiledBasic(
             modifier = Modifier,
             placeable = "Item name",
@@ -133,33 +135,7 @@ fun AddFood(addFood: ModuleAddFood = hiltViewModel()
             onChang = { valuePrice = it },
             value = valuePrice
         )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(53.dp)
-                .clip(RoundedCornerShape(15))
-                .border(1.dp, Color.DarkGray, RoundedCornerShape(15))
-                .padding(start = 10.dp, end = 10.dp)
-        ) {
-            Text(
-                text = "Item Image",
-                fontFamily = FontFamily(Font(R.font.font_yeon)),
-                fontSize = 14.sp,
-                lineHeight = 17.5.sp,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-            )
-            Image(
-                painter = painterResource(id = R.drawable.baseline_download_for_offline_24),
-                contentDescription = null,
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .clickable(onClick =
-                    {
-                        handle.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                    })
-            )
-        }
+        AddImgFood(HandleGetImgDevice = handle)
         Image(
             painter = rememberImagePainter(data = templeImg),
             contentDescription = null,
@@ -171,33 +147,8 @@ fun AddFood(addFood: ModuleAddFood = hiltViewModel()
                 .align(Alignment.CenterHorizontally)
                 .clip(RoundedCornerShape(10.dp))
         )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(53.dp)
-                .clip(RoundedCornerShape(15))
-                .border(1.dp, Color.DarkGray, RoundedCornerShape(15))
-        ) {
-            Text(
-                text = "Short Description",
-                fontFamily = FontFamily(Font(R.font.font_yeon)),
-                fontSize = 14.sp,
-                lineHeight = 17.5.sp,
-                modifier = Modifier
-                    .padding(start = 20.dp)
-                    .align(Alignment.CenterStart)
-            )
-        }
-        TextField(
-            value = valueShortDescription,
-            onValueChange = { valueShortDescription = it },
-            colors = TextFieldStyles.defaultColors,
-            modifier = Modifier
-                .padding(top = 10.dp, bottom = 10.dp)
-                .fillMaxWidth()
-                .border(2.dp, Color.DarkGray, RoundedCornerShape(8))
-                .height(81.dp)
-        )
+        AddDescriptionFood(valeDescription = valueShortDescription
+            , onChangeDescription = {value ->valueShortDescription = value})
         TextField(value = valueTest,
             onValueChange = { valueTest = it },
             keyboardOptions = KeyboardOptions.run {
@@ -245,6 +196,69 @@ fun AddFood(addFood: ModuleAddFood = hiltViewModel()
 }
 
 @Composable
+fun AddImgFood(HandleGetImgDevice: ManagedActivityResultLauncher<PickVisualMediaRequest, Uri?>
+){
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(53.dp)
+            .clip(RoundedCornerShape(15))
+            .border(1.dp, Color.DarkGray, RoundedCornerShape(15))
+            .padding(start = 10.dp, end = 10.dp)
+    ) {
+        Text(
+            text = "Item Image",
+            fontFamily = FontFamily(Font(R.font.font_yeon)),
+            fontSize = 14.sp,
+            lineHeight = 17.5.sp,
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+        )
+        Image(
+            painter = painterResource(id = R.drawable.baseline_download_for_offline_24),
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .clickable(onClick =
+                {
+                    HandleGetImgDevice.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                })
+        )
+    }
+
+}
+
+@Composable
+fun AddDescriptionFood(valeDescription:String, onChangeDescription:(String)-> Unit){
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(53.dp)
+            .clip(RoundedCornerShape(15))
+            .border(1.dp, Color.DarkGray, RoundedCornerShape(15))
+    ) {
+        Text(
+            text = "Short Description",
+            fontFamily = FontFamily(Font(R.font.font_yeon)),
+            fontSize = 14.sp,
+            lineHeight = 17.5.sp,
+            modifier = Modifier
+                .padding(start = 20.dp)
+                .align(Alignment.CenterStart)
+        )
+    }
+    TextField(
+        value = valeDescription,
+        onValueChange = { onChangeDescription },
+        colors = TextFieldStyles.defaultColors,
+        modifier = Modifier
+            .padding(top = 10.dp, bottom = 10.dp)
+            .fillMaxWidth()
+            .border(2.dp, Color.DarkGray, RoundedCornerShape(8))
+            .height(81.dp)
+    )
+}
+@Composable
 fun LazyColumnIngredients(listIngredients: List<String>) {
     LazyColumn(
         modifier = Modifier
@@ -265,30 +279,30 @@ fun LazyColumnIngredients(listIngredients: List<String>) {
     }
 }
 
-@Preview
 @Composable
-fun Top() {
-    Row(
-        modifier = Modifier
-            .padding(bottom = 30.dp)
-            .fillMaxWidth()
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.icon_3),
-            contentDescription = null,
-            modifier = Modifier.weight(0.1f)
-        )
-        Text(
-            text = "Add Item",
-            fontFamily = FontFamily(Font(R.font.font_yeon)),
-            fontSize = 40.sp,
+fun TopBarAddFood() {
+    Surface {
+        Row(
             modifier = Modifier
-                .padding(start = 50.dp)
-                .weight(0.8f)
-        )
+                .padding(bottom = 30.dp)
+                .fillMaxWidth()
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.icon_3),
+                contentDescription = null,
+                modifier = Modifier.weight(0.1f)
+            )
+            Text(
+                text = "Add Item",
+                fontFamily = FontFamily(Font(R.font.font_yeon)),
+                fontSize = 40.sp,
+                modifier = Modifier
+                    .padding(start = 50.dp)
+                    .weight(0.8f)
+            )
+        }
     }
-}
-
-fun checkAddFood(){
 
 }
+
+

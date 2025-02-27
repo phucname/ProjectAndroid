@@ -133,6 +133,6 @@ private object DisabledRippleTheme : RippleTheme {
 
 @Preview
 @Composable
-fun  Preview(){
+fun  Fetting(){
     NavigationMain()
 }

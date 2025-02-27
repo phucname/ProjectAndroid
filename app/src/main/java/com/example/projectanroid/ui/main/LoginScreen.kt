@@ -147,6 +147,6 @@ fun CustomLoginWith(image: Int, nameLogin:String){
 }
 @Preview
 @Composable
-fun Preview(){
+fun GettingView(){
     LoginScreen(navHostController = rememberNavController())
 }
