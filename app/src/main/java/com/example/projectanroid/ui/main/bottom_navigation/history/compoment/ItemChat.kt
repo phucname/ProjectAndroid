@@ -38,38 +38,42 @@ fun ItemTextChat(dataChat: DataChat) {
             .clip(RoundedCornerShape(10.dp))
             .width(200.dp)
             .background(Color.DarkGray.copy(alpha = 0.7f))  // Cắt bo góc trước
-            .padding( 10.dp, 5.dp)
+            .padding(10.dp, 5.dp)
     ) {
         Text(text = dataChat.content, color = Color.White)
         Spacer(modifier = Modifier.height(5.dp))
-        Text(text = dataChat.time, color = Color.White)
+        if (dataChat.HidenTime)  Text(text = dataChat.time, color = Color.White)
+
     }
 
 }
 
 @Composable
-fun ItemChatMain(dataChat: DataChat){
-    Row(horizontalArrangement = Arrangement.End,
-        modifier = Modifier.fillMaxWidth())
-    {
+fun ItemChat(dataChat: DataChat) {
+    Row(
+        horizontalArrangement = if (dataChat.isMainUser) Arrangement.End else Arrangement.Start,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        if (!dataChat.isMainUser) { // Nếu là khách thì ảnh trước
+            ChatImage(dataChat.HidenImg)
+        }
         ItemTextChat(dataChat)
-
-            Image(painter = painterResource(id = R.drawable.g10)
-                , contentDescription = null
-                , modifier = Modifier.size(50.dp))
+        if (dataChat.isMainUser) { // Nếu là chủ thì ảnh sau
+            ChatImage(dataChat.HidenImg)
+        }
     }
 }
+
 @Composable
-fun ItemChatGuest(dataChat: DataChat){
-    Row(horizontalArrangement = Arrangement.Start,
-        modifier = Modifier.fillMaxWidth())
-    {
-        Image(painter = painterResource(id = R.drawable.g10)
-            , contentDescription = null
-            , modifier = Modifier.size(50.dp)
+fun ChatImage(hideImg: Boolean) {
+    if (hideImg) {
+        Image(
+            painter = painterResource(id = R.drawable.g10),
+            contentDescription = null,
+            modifier = Modifier.size(50.dp)
         )
-        ItemTextChat(dataChat)
-
+    } else {
+        Spacer(modifier = Modifier.size(50.dp))
     }
 }
 @Composable
@@ -81,12 +85,6 @@ fun GetItemChat(){
 @Composable
 @Preview(showBackground = false)
 fun GetChatMain(){
-    ItemChatMain(dataTemple[0])
-
-}
-@Composable
-@Preview(showBackground = false)
-fun GetChatGuest(){
-    ItemChatGuest(dataTemple[0])
+    ItemTextChat(dataTemple[0])
 
 }

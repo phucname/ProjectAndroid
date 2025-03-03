@@ -1,13 +1,21 @@
 package com.example.projectanroid.ui.main
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.isImeVisible
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -36,103 +44,63 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.projectanroid.MainAppLication
 import com.example.projectanroid.R
+import com.example.projectanroid.ui.components.BottomBar
+import com.example.projectanroid.ui.components.TopBar
 import com.example.projectanroid.ui.main.bottom_navigation.HomeScreen.HomeSrceen
 import com.example.projectanroid.ui.main.bottom_navigation.Screen
 import com.example.projectanroid.ui.main.bottom_navigation.cart.CartSrceen
 import com.example.projectanroid.ui.main.bottom_navigation.history.HistorySrceen
 import com.example.projectanroid.ui.main.bottom_navigation.search.SearchSrceen
 import com.example.projectanroid.ui.detail.AddFood
+import com.example.projectanroid.utils.DisabledRippleTheme
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun NavigationMain() {
-    val listScreen = listOf(Screen.Home, Screen.Cart, Screen.search, Screen.history, Screen.Profile)
+fun NavigationMain(appLication: Context) {
     val navController = rememberNavController()
     CompositionLocalProvider(value = LocalRippleTheme provides DisabledRippleTheme)//Dây là một CompositionLocal có nhiệm vụ quản lý hiệu ứng Ripple trong Compose.
     {
-        Scaffold (
-            topBar = {
-                Row(
-                    modifier = Modifier
-                        .padding(start = 20.dp, end = 20.dp)
-                        .height(70.dp)
-                        .fillMaxWidth()
-                        , horizontalArrangement = Arrangement.SpaceBetween
-                        , verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "Explore Your Favorite Food",
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.W400,
-                        fontFamily = FontFamily(Font(R.font.font_yeon))
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.baseline_notifications_none_24),
-                        contentDescription = null
-                    )
+            Scaffold (
+                topBar = {
+                    TopBar(modifier = Modifier)
+                },
+                bottomBar = {
+                    BottomBar(navController = navController)
                 }
 
-            },
-            bottomBar = {
-                BottomNavigation(  backgroundColor = Color.White, modifier = Modifier
-                    .height(76.dp)
-                    .border(
-                        0.2.dp,
-                        Color.Black,
-                        RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
-                    )
-                    .clip(RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp))
-                ) {
-                    val navBackStackEntry by navController.currentBackStackEntryAsState()
-                    val currentDestination = navBackStackEntry?.destination
-                    listScreen.forEach{screen ->
-                        BottomNavigationItem(selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true, onClick = { navController.navigate(screen.route)}
-                            , icon = { Image(painter = painterResource(id = screen.icon), contentDescription = null) }
-                            , modifier = Modifier.fillMaxHeight()
-                            , unselectedContentColor = Color.Transparent
-                            , label ={ Text(text = stringResource(id = screen.resourceId), fontSize = 12.sp
-                                , modifier = Modifier.padding(bottom = if(currentDestination?.route == screen.route) 20.dp else 0.dp))}
-                        )
-
+            ){
+                NavHost(navController = navController, startDestination = Screen.Home.route,
+                    Modifier
+                        .padding(it)
+                        .imePadding()){
+                    composable(Screen.Home.route){
+                        HomeSrceen()
+                    }
+                    composable(Screen.Profile.route){
+                        AddFood()
+                    }
+                    composable(Screen.Cart.route){
+                        CartSrceen("Crat")
+                    }
+                    composable(Screen.history.route){
+                        HistorySrceen( appLication)
+                    }
+                    composable(Screen.search.route){
+                        SearchSrceen()
                     }
                 }
             }
-
-        ){
-            NavHost(navController = navController, startDestination = Screen.Home.route, Modifier.padding(it) ){
-                composable(Screen.Home.route){
-                    HomeSrceen()
-                }
-                composable(Screen.Profile.route){
-                    AddFood()
-                }
-                composable(Screen.Cart.route){
-                    CartSrceen("Crat")
-                }
-                composable(Screen.history.route){
-                    HistorySrceen("hiss")
-                }
-                composable(Screen.search.route){
-                    SearchSrceen()
-                }
-            }
         }
-    }
 
 }
 
-private object DisabledRippleTheme : RippleTheme {
 
-    @Composable
-    override fun defaultColor(): Color = Color.Transparent
-
-    @Composable
-    override fun rippleAlpha(): RippleAlpha = RippleAlpha(0f, 0f, 0f, 0f)
-}
 
 @Preview
 @Composable
 fun  Fetting(){
-    NavigationMain()
+
 }

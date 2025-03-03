@@ -1,6 +1,7 @@
 package com.example.projectanroid
 
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Text
@@ -24,6 +25,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+
         setContent {
             ProjectAnroidTheme {
                 // A surface container using the 'background' color from the theme
@@ -44,7 +47,7 @@ class MainActivity : ComponentActivity() {
                             SetLocationScreen()
                         }
                         composable(route = "Main"){
-                            NavigationMain()
+                            NavigationMain(applicationContext)
                         }
                         composable(route = "AddFood"){
                             AddFood()
