@@ -18,6 +18,7 @@ import com.example.projectanroid.presentation.onboarding.OnboardingScreen
 import com.example.projectanroid.ui.main.SetLocationScreen
 import com.example.projectanroid.ui.main.SlplashScreen
 import com.example.projectanroid.ui.detail.AddFood
+import com.example.projectanroid.ui.main.Loading.Loading
 import com.example.projectanroid.ui.theme.ProjectAnroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,15 +26,13 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
-
         setContent {
             ProjectAnroidTheme {
                 // A surface container using the 'background' color from the theme
                     val navController = rememberNavController()
                     NavHost(navController = navController,startDestination = "Main"){
                         composable(route = Screens.Splash){
-                            SlplashScreen(navController)
+                            Loading(applicationContext)
                         }
                         composable(route = Screens.OnBoarding){
                             OnboardingScreen(navController)

@@ -5,6 +5,7 @@ import com.example.projectanroid.data.Firebase.Resource
 import com.example.projectanroid.data.Repository.FoodRepos
 import com.example.projectanroid.data.module.Food
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class viewmoduleFoodList @Inject constructor(val foodRepos: FoodRepos) :ViewModel(){
     val datalistFood = Channel<List<Food>>()
     val _dataListFood = datalistFood.receiveAsFlow()
+    @OptIn(DelicateCoroutinesApi::class)
     fun listFood (){
         GlobalScope.launch{
             foodRepos.getListFood().collect{request ->

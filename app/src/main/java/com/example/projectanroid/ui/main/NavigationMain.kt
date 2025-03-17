@@ -54,6 +54,7 @@ import com.example.projectanroid.ui.main.bottom_navigation.cart.CartSrceen
 import com.example.projectanroid.ui.main.bottom_navigation.history.HistorySrceen
 import com.example.projectanroid.ui.main.bottom_navigation.search.SearchSrceen
 import com.example.projectanroid.ui.detail.AddFood
+import com.example.projectanroid.ui.main.Loading.Loading
 import com.example.projectanroid.utils.DisabledRippleTheme
 
 
@@ -91,6 +92,7 @@ fun NavigationMain(appLication: Context) {
                     composable(Screen.search.route){
                         SearchSrceen()
                     }
+
                 }
             }
         }

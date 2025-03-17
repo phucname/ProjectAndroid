@@ -62,6 +62,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.1.0")
     implementation(libs.firebase.storage)
     implementation(libs.firebase.database.ktx)
+    implementation(libs.androidx.animation.graphics.android)
     kapt ("com.google.dagger:hilt-compiler:2.51.1")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
@@ -75,9 +76,13 @@ dependencies {
     testAnnotationProcessor ("com.google.dagger:hilt-compiler:2.51.1")
 
 
-    implementation ("androidx.compose.ui:ui:1.6.8")
-    implementation ("androidx.compose.material:material:1.6.8")
+    implementation("androidx.vectordrawable:vectordrawable-animated:1.1.0")
+
+
+    implementation ("androidx.compose.ui:ui:1.5.0")
+    implementation ("androidx.compose.material:material:1.5.0")
     implementation("androidx.compose.animation:animation:1.6.8")
+    implementation("androidx.compose.foundation:foundation:1.5.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

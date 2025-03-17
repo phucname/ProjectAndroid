@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.projectanroid.R
 import com.example.projectanroid.ui.components.CustomTextFiled
-import com.example.projectanroid.ui.main.bottom_navigation.HomeScreen.lazalyListFood
+import com.example.projectanroid.ui.main.bottom_navigation.HomeScreen.LazylyListFood
 import com.example.projectanroid.ui.main.bottom_navigation.HomeScreen.viewmoduleFoodList
 
 @Composable
@@ -45,7 +45,7 @@ fun SearchSrceen ( viewmoduleFoodList: viewmoduleFoodList = hiltViewModel()) {
             , fontSize = 24.sp
             , modifier = Modifier.padding(30.dp).height(30.dp)
         )
-        lazalyListFood(foodList)
+        LazylyListFood(foodList)
     }
 }
 

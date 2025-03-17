@@ -22,7 +22,6 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,7 +36,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -47,7 +45,7 @@ import com.example.projectanroid.data.module.Food
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeSrceen ( viewmoduleFoodList: viewmoduleFoodList = hiltViewModel()) {
+fun HomeSrceen(viewmoduleFoodList: viewmoduleFoodList = hiltViewModel()) {
     val foodList by viewmoduleFoodList._dataListFood.collectAsState(initial = emptyList())
     LaunchedEffect(Unit) {
         viewmoduleFoodList.listFood()
@@ -63,7 +61,7 @@ fun HomeSrceen ( viewmoduleFoodList: viewmoduleFoodList = hiltViewModel()) {
             .padding(top = 30.dp)
     ) {
 
-        HorizontalParer(state = state, listImg =listImg )
+        HorizontalParer(state = state, listImg = listImg)
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically, modifier = Modifier
@@ -98,71 +96,49 @@ fun HomeSrceen ( viewmoduleFoodList: viewmoduleFoodList = hiltViewModel()) {
                 )
             }
         }
-
-        lazalyListFood(foodList)
-        
-
-
-
+        LazylyListFood(foodList)
     }
-
-
-//        LaunchedEffect(Unit) {
-//            while (true) {
-//                GlobalScope.launch {
-//                    val nextIndex = 1
-//                }
-//                delay(3000) // thời gian chờ giữa các lần cuộn (3000ms = 3 giây)
-//            }
-//        }
-
 }
 
-
-
 @Composable
-fun lazalyListFood(listFood: List<Food>){
-    LazyColumn(modifier = Modifier
-        .fillMaxWidth()) {
-        items(items = listFood, itemContent = {
-           item ->
+fun LazylyListFood(listFood: List<Food>) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        items(items = listFood, itemContent = { item ->
             ItemView.ItemFoodOder(itemFood = item)
-            Spacer(modifier = Modifier
-                .fillMaxWidth()
-                .height(10.dp))
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(10.dp)
+            )
         })
     }
 
 }
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HorizontalParer(state: PagerState, listImg: List<Int>){
-    HorizontalPager(verticalAlignment = Alignment.CenterVertically,
-        contentPadding = PaddingValues(start = 15.dp, end =15.dp)
-        , modifier = Modifier
+fun HorizontalParer(state: PagerState, listImg: List<Int>) {
+    HorizontalPager(
+        verticalAlignment = Alignment.CenterVertically,
+        contentPadding = PaddingValues(start = 15.dp, end = 15.dp), modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp)
-        , state = state) { page ->
-        Card(modifier = Modifier.padding(start = 10.dp)
+            .height(200.dp), state = state
+    ) { page ->
+        Card(
+            modifier = Modifier.padding(start = 10.dp)
         ) {
-            Box(modifier = Modifier.fillMaxSize()){
-                Image( modifier = Modifier
-                    .width(300.dp)
-                    .height(200.dp)
-                    .align(Alignment.Center),
-                    painter = painterResource(id = listImg[page])
-                    , contentDescription = null )
+            Box(modifier = Modifier.fillMaxSize()) {
+                Image(
+                    modifier = Modifier
+                        .width(300.dp)
+                        .height(200.dp)
+                        .align(Alignment.Center),
+                    painter = painterResource(id = listImg[page]), contentDescription = null
+                )
             }
-
-
         }
-    }
-}
-@Preview
-@Composable
-fun preview() {
-    Surface {
-
-
     }
 }
